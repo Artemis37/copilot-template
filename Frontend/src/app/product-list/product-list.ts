@@ -36,6 +36,10 @@ export class ProductList implements OnInit {
   // Available categories (will be populated from API response)
   categories: string[] = [];
 
+  // Used for delete confirmation
+  deleteProductId: number | null = null;
+  showDeleteConfirm = false;
+
   constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit() {
@@ -172,5 +176,38 @@ export class ProductList implements OnInit {
     }
     
     return pages;
+  }
+
+  deleteProduct(event: Event, productId: number) {
+    // Stop the event from propagating to parent (prevent navigation)
+    event.stopPropagation();
+    
+    // Set the product id to delete and show confirmation dialog
+    this.deleteProductId = productId;
+    this.showDeleteConfirm = true;
+  }
+  
+  confirmDelete() {
+    if (this.deleteProductId) {
+      this.loading = true;
+      this.productService.deleteProduct(this.deleteProductId).subscribe({
+        next: () => {
+          // Reload the product list after deletion
+          this.loadProducts();
+          this.closeDeleteConfirm();
+        },
+        error: (err) => {
+          console.error('Error deleting product:', err);
+          this.error = 'Failed to delete product. Please try again.';
+          this.loading = false;
+          this.closeDeleteConfirm();
+        }
+      });
+    }
+  }
+  
+  closeDeleteConfirm() {
+    this.showDeleteConfirm = false;
+    this.deleteProductId = null;
   }
 }
