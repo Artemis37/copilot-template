@@ -1,1 +1,129 @@
+<div class="product-list-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Our Products</h1>
+    <p>Discover our collection of quality products</p>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="filters-container">
+      <div class="filter-group">
+        <label>Category</label>
+        <select [(ngModel)]="selectedCategory" (change)="applyFilters()" class="filter-select">
+          <option value="">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Price Range</label>
+        <div class="price-inputs">
+          <input type="number" [(ngModel)]="minPrice" placeholder="Min" (change)="applyFilters()">
+          <span>to</span>
+          <input type="number" [(ngModel)]="maxPrice" placeholder="Max" (change)="applyFilters()">
+        </div>
+      </div>
+
+      <div class="filter-group checkbox-filters">
+        <div class="checkbox-filter">
+          <input type="checkbox" id="onSale" [(ngModel)]="showOnSale" (change)="applyFilters()">
+          <label for="onSale">On Sale</label>
+        </div>
+        <div class="checkbox-filter">
+          <input type="checkbox" id="featured" [(ngModel)]="showFeatured" (change)="applyFilters()">
+          <label for="featured">Featured</label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Sort By</label>
+        <div class="sort-controls">
+          <select [(ngModel)]="sortBy" (change)="applyFilters()" class="filter-select">
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+            <option value="rating">Rating</option>
+            <option value="createdDate">Newest</option>
+          </select>
+          <button class="sort-direction" (click)="sortDesc = !sortDesc; applyFilters()">
+            <span *ngIf="!sortDesc">↑</span>
+            <span *ngIf="sortDesc">↓</span>
+          </button>
+        </div>
+      </div>
+
+      <button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading products...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-state">
+    <div class="error-icon">!</div>
+    <h3>Error Loading Products</h3>
+    <p>{{error}}</p>
+    <button (click)="loadProducts()" class="retry-btn">Try Again</button>
+  </div>
+
+  <!-- Products Grid -->
+  <div *ngIf="!loading && !error" class="products-section">
+    <!-- No Products Found -->
+    <div *ngIf="products.length === 0" class="no-products">
+      <h3>No Products Found</h3>
+      <p>Try adjusting your filters or check back later.</p>
+      <button (click)="clearFilters()" class="retry-btn">Clear Filters</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div *ngIf="products.length > 0" class="product-grid">
+      <div *ngFor="let product of products" class="product-card" (click)="viewProduct(product.id)">
+        <div class="product-image">
+          <img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)">          <span *ngIf="product.isOnSale" class="sale-badge">SALE</span>
+          <span *ngIf="product.isFeatured" class="featured-badge">FEATURED</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">{{product.name}}</h3>
+          <p class="product-category">{{product.category}}</p>
+          <p class="product-price">${{product.price.toFixed(2)}}</p>
+          <p class="product-description">{{product.description | slice:0:100}}{{product.description.length > 100 ? '...' : ''}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages > 1" class="pagination">
+      <button 
+        (click)="changePage(currentPage - 1)" 
+        [disabled]="currentPage === 1"
+        class="page-btn prev-btn">
+        Previous
+      </button>
+
+      <div class="page-numbers">
+        <ng-container *ngFor="let page of getPageNumbers()">
+          <span *ngIf="page === -1 || page === -2" class="ellipsis">...</span>
+          <button 
+            *ngIf="page > 0"
+            [class.active]="page === currentPage"
+            (click)="changePage(page)"
+            class="page-number">
+            {{page}}
+          </button>
+        </ng-container>
+      </div>
+
+      <button 
+        (click)="changePage(currentPage + 1)" 
+        [disabled]="currentPage === totalPages"
+        class="page-btn next-btn">
+        Next
+      </button>
+    </div>
+  </div>
+</div>
 

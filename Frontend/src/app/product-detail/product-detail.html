@@ -1,0 +1,84 @@
+<div class="product-detail-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading product details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-state">
+    <div class="error-icon">!</div>
+    <h3>Error</h3>
+    <p>{{error}}</p>
+    <button (click)="goBack()" class="back-btn">Back to Products</button>
+  </div>
+
+  <!-- Product Detail -->
+  <div *ngIf="!loading && !error && product" class="product-detail">
+    <div class="back-link">
+      <button (click)="goBack()" class="back-btn">
+        <span>←</span> Back to Products
+      </button>
+    </div>
+
+    <div class="product-content">
+      <div class="product-media">
+        <div class="product-image">
+          <img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)">          <span *ngIf="product.isOnSale" class="sale-badge">SALE</span>
+          <span *ngIf="product.isFeatured" class="featured-badge">FEATURED</span>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <div class="product-header">
+          <h1 class="product-name">{{product.name}}</h1>
+          <span class="product-category">{{product.category}}</span>
+        </div>
+
+        <div class="product-meta">
+          <div class="price-container">
+            <span class="product-price">${{product.price.toFixed(2)}}</span>
+          </div>
+          
+          <div class="product-rating" *ngIf="product.rating">
+            <div class="stars">
+              <span *ngFor="let star of [1,2,3,4,5]" class="star">
+                <span *ngIf="product.rating && product.rating >= star">★</span>
+                <span *ngIf="!product.rating || product.rating < star">☆</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-description">
+          <h3>Description</h3>
+          <p>{{product.description}}</p>
+        </div>
+
+        <div class="product-stock" *ngIf="product.stockQuantity !== undefined">
+          <strong>In Stock:</strong> {{product.stockQuantity}} units
+        </div>
+
+        <div class="product-cta">
+          <button class="buy-btn">Buy Now</button>
+          <button class="cart-btn">Add to Cart</button>
+        </div>        <div class="product-details">
+          <div class="detail-item" *ngIf="product.dateAdded">
+            <strong>Added:</strong> {{product.dateAdded | date:'mediumDate'}}
+          </div>
+          <div class="detail-item" *ngIf="product.brand">
+            <strong>Brand:</strong> {{product.brand}}
+          </div>
+          <div class="detail-item">
+            <strong>Product ID:</strong> {{product.id}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="related-products">
+      <h2>You might also like</h2>
+      <p>Related products will be shown here</p>
+    </div>
+  </div>
+</div>
