@@ -1,0 +1,77 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <h1>Welcome to My Angular App</h1>
+    <p class="hero-subtitle">A modern, responsive web application built with Angular 19</p>
+    <div class="hero-actions">
+      <a routerLink="/product" class="btn btn-primary">View Products</a>
+      <button class="btn btn-secondary" (click)="scrollToFeatures()">Learn More</button>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section" #featuresSection>
+    <h2>Key Features</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🚀</div>
+        <h3>Modern Design</h3>
+        <p>Built with Angular 19 and modern web technologies for optimal performance and user experience.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Responsive</h3>
+        <p>Fully responsive design that looks great on desktop, tablet, and mobile devices.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Fast & Efficient</h3>
+        <p>Optimized for performance with lazy loading, tree-shaking, and efficient bundle sizes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔧</div>
+        <h3>Easy to Customize</h3>
+        <p>Modular architecture makes it easy to extend and customize according to your needs.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Secure</h3>
+        <p>Built with security best practices and Angular's built-in protection mechanisms.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌟</div>
+        <h3>User-Friendly</h3>
+        <p>Intuitive navigation and clean interface for the best user experience.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stats-container">
+      <div class="stat-item">
+        <h3>100%</h3>
+        <p>TypeScript</p>
+      </div>
+      <div class="stat-item">
+        <h3>19+</h3>
+        <p>Angular Version</p>
+      </div>
+      <div class="stat-item">
+        <h3>Mobile</h3>
+        <p>First Design</p>
+      </div>
+      <div class="stat-item">
+        <h3>Open</h3>
+        <p>Source</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h2>Ready to Get Started?</h2>
+    <p>Explore our products and see what we have to offer.</p>
+    <a routerLink="/product" class="btn btn-large btn-primary">Browse Products</a>
+  </section>
+</div>

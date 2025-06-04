@@ -1,6 +1,6 @@
 # Product Management UI Instructions
 
-This document provides instructions for implementing a product management UI based on the reference design shown in `src/assets/product-ui-reference.png`. The UI should be implemented using Angular and will integrate with a backend API for full CRUD functionality.
+This document provides instructions for implementing a product management UI. The UI should be implemented using Angular and will integrate with a backend API for full CRUD functionality.
 
 ## Overview
 
@@ -14,8 +14,6 @@ The product management UI should closely resemble the e-commerce interface shown
 6. Product management features (add, edit, delete)
 
 ## Implementation Details
-
-For detailed implementation instructions, refer to `PRODUCT-UI-INSTRUCTIONS.md` which includes:
 
 - Component structure and organization
 - Styling guidelines with specific color codes
@@ -40,11 +38,27 @@ At minimum, the implementation should include:
 
 The backend API is available at `https://localhost:7194` with the following endpoints:
 
-- **GET /api/products** - Retrieve all products
+- **GET /api/products** - Retrieve all products with optional filtering and pagination
 - **GET /api/products/{id}** - Retrieve a specific product by ID
 - **POST /api/products** - Create a new product
 - **PUT /api/products/{id}** - Update an existing product
 - **DELETE /api/products/{id}** - Delete a product
+
+### GET /api/products Query Parameters
+
+The GET products endpoint supports the following optional query parameters for filtering, sorting, and pagination:
+
+- **Category** (string) - Filter products by category name
+- **MinPrice** (number) - Filter products by minimum price
+- **MaxPrice** (number) - Filter products by maximum price  
+- **OnSale** (boolean) - Filter products by sale status
+- **Featured** (boolean) - Filter products by featured status
+- **SortBy** (string) - Field to sort by (e.g., "price", "name", "rating")
+- **SortDesc** (boolean) - Sort in descending order if true
+- **Page** (integer) - Page number, starting from 1
+- **PageSize** (integer) - Number of items per page (default: 10)
+
+**Example URL**: `https://localhost:7194/api/Products?Page=1&PageSize=10&Category=Electronics&MinPrice=50&MaxPrice=500&OnSale=true&SortBy=price&SortDesc=false`
 
 ## Getting Started
 
@@ -52,3 +66,6 @@ The backend API is available at `https://localhost:7194` with the following endp
 2. Start the development server: `npm start`
 3. Follow the component structure outlined in `PRODUCT-UI-INSTRUCTIONS.md`
 4. Start building components from the ground up, beginning with data models and services
+
+## Note
+Keep the router-outlet from Angular and use router to display my product list component in the router outlet position
