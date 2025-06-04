@@ -54,6 +54,7 @@ Implement a ProductsController with the following endpoints:
 ### 6. Documentation
 - Configure Swagger/OpenAPI documentation
 - Add appropriate XML comments to controllers and models
+- Ensure proper Swagger UI configuration in Program.cs (see detailed instructions below)
 
 ## Implementation Steps
 
@@ -91,12 +92,28 @@ Implement a ProductsController with the following endpoints:
    - Implement proper error handling
 
 8. **Configure Swagger documentation**:
-   - Ensure all endpoints are properly documented
+   - Enable XML documentation in the project file by adding these properties: ```xml
+ <GenerateDocumentationFile>true</GenerateDocumentationFile>
+ <NoWarn>$(NoWarn);1591</NoWarn>
+ ```   - Add XML comments to controllers and models
+   - Configure SwaggerGen in Program.cs to include XML comments
+   - Configure Swagger UI in Program.cs, making sure the RoutePrefix setting is properly formatted: ```csharp
+ app.UseSwaggerUI(options =>
+ {
+     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Divine Shop API V1");
+     options.RoutePrefix = "swagger"; // Make sure this matches launchUrl in launchSettings.json
+     });
+ ```   - Ensure consistency between Program.cs Swagger configuration and launchSettings.json:
+     - If using `options.RoutePrefix = string.Empty;` in Program.cs, set `"launchUrl": ""` in launchSettings.json 
+     - If using `options.RoutePrefix = "swagger";` in Program.cs, set `"launchUrl": "swagger"` in launchSettings.json
 
 ## Testing
 - Test all endpoints using Swagger UI
 - Verify all CRUD operations work correctly
 - Test the filtering and sorting features that match the reference UI
+- Access Swagger UI at the correct URL based on your configuration:
+  - Standard: https://localhost:{port}/swagger
+  - Root configuration: https://localhost:{port}/
 
 ## Expected Result
 A fully functional RESTful API that can:
@@ -107,3 +124,11 @@ A fully functional RESTful API that can:
 - Delete products
 
 The API should accurately represent the product information structure shown in the Divine Shop reference image, without requiring pre-defined data structures in this instruction file.
+
+## Common Issues and Troubleshooting
+- If Swagger UI isn't accessible, check for:
+  1. Syntax errors in the Swagger UI configuration (e.g., unclosed quotes)
+  2. Mismatch between Program.cs RoutePrefix and launchSettings.json launchUrl
+  3. Missing or inaccessible XML documentation file
+- Make sure all string literals in Program.cs are properly closed with quotes
+- Ensure the application is running in Development environment where Swagger UI is enabled
