@@ -1,6 +1,13 @@
-# NbcNewsClone
+# Product Management UI Implementation Guide
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.14.
+This Angular project implements a product management UI that integrates with a backend API for full CRUD functionality.
+
+## Files and Documentation
+
+1. **INSTRUCTIONS.md**: High-level overview of the implementation requirements
+2. **PRODUCT-UI-INSTRUCTIONS.md**: Detailed implementation guide with component specifications, styling guidelines, and best practices
+3. **product-ui-mockup.html**: HTML/CSS mockup of the product management UI
+4. **src/assets/product-ui-reference.png**: Reference image for the UI design
 
 ## Development server
 
@@ -12,13 +19,23 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## API Integration
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+This project integrates with a backend API available at `https://localhost:7194` with the following endpoints:
 
-```bash
-ng generate component component-name
-```
+- **GET /api/products** - Retrieve all products
+- **GET /api/products/{id}** - Retrieve a specific product by ID
+- **POST /api/products** - Create a new product
+- **PUT /api/products/{id}** - Update an existing product
+- **DELETE /api/products/{id}** - Delete a product
+
+## Implementation Workflow
+
+1. Start by reviewing the INSTRUCTIONS.md and PRODUCT-UI-INSTRUCTIONS.md files
+2. Examine the product-ui-mockup.html and reference image to understand the UI layout and design
+3. Follow the implementation steps in PRODUCT-UI-INSTRUCTIONS.md to create components, services, and models
+4. Use the provided API endpoints to integrate with the backend
+5. Implement responsive design according to the specifications
 
 For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
